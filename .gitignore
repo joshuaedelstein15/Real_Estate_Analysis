@@ -1,3 +1,6 @@
 # junkfiles
 .DS_Store
 .ipynb_checkpoints
+
+# data
+kc_house_data.csv
