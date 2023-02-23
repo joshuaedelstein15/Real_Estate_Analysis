@@ -66,7 +66,7 @@ First, let's pull up a correlation matrix of all the data.
 Now lets create a heatmap to see if we can get a better view
 
 <div>
-<img src="Images/heatmap.jpg", width = 500, height = 250/>
+<img src="Images/heatmap.jpg", width = 400, height = 300/>
 </div>
 
 
