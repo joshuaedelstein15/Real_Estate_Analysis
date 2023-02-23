@@ -226,7 +226,7 @@ We performed data cleaning on the data frame as a whole and removed a small amou
 We will now pull up scatterplots and bar charts of our factors:
 
 <div>
-<img src="Images/num_graph.jpg", width = 800, height = 300/>
+<img src="Images/num_graph.jpg", width = 700, height = 300/>
 </div>
 
 <div>
@@ -247,14 +247,189 @@ These features were fed into an ordinary least-squares multiple regression model
 Below are all model coefficients and p-values(again excluding zipcode as there are far too many):
 
 <div>
-<img src="Images/factor_stats.jpg", width = 200, height = 200/>
+<img src="Images/factor_stats.jpg", width = 300, height = 300/>
 </div>
 
 And here are summary statistics of the zipcode coefficients:
 
 <div>
-<img src="Images/zipcode_stats.jpg", width = 200, height = 200/>
+<img src="Images/zipcode_stats.jpg", width = 300, height = 300/>
 </div>
 
+To summarize:
+
+The constant:
+- For a house  with 0 `sqft_living` and `sqft_patio` area, as well as 0 `bedrooms`. Thats `yr_built` and `yr_renovated` are 0(meaning it was built in 1900 and never renovated. With a house `grade` below 11, no `view`, not on a `waterfront`, with no traffic or other `nuisance`, in below good `condition`, that uses a private `sewer_system`, will have a value just around \\$3 million.
+    - Again, it is fine that this number doesn't make sense, as there is no such thing as a house with 0 sqft, etc.
+
+The coefficients:
+- `sqft_living`              394.8094
+    - For an increase in 1 square foot of living area, price increases by \\$395.
+- `sqft_patio`                 85.6320
+    - For an increase in 1 square foot of patio area, price increases by \\$86.
+- `bedrooms`               -4.617e+04
+    - This means that for every bedroom in a house there is a decrease in price of around \\$46k. As we mentioned earlier this value is quite strange, as bedrooms has a positive relationship with price. Although we already tested for high correlation between features, this negative number may be a result of some sort of bedrooms being correlated with other predictor variables in the model that also have an effect on price, and the negative coefficient for 'bedrooms' is capturing the joint effect of these variables.
+- `yr_built`                 436.9200
+    - For every increase in year above 1900 the price goes up by \\$436. In other words the newer the house is the more it will cost.
+- `yr_renovated`               46.3294
+    - Similar to the year the house was built, the newer the renovation done on the house the more it will cost.
+- `high_grade_yes`           1.067e+06
+    - This category is indicating whether the house has a grade of 11 or above. Grades 11-13 indicate whether it's "Excellent", "Luxury", or "Mansion". If it is in one of these categories the price will go up by over \\$1 million dollars.
+- `view_AVERAGE`             8.003e+04
+- `view_EXCELLENT`           8.135e+05
+- `view_FAIR`               1.913e+05
+- `view_GOOD`                 1.53e+05
+    - These next 4 are describing the relationship that the houses view has on its price. They are all being compared to houses with no view at all. If the house does have a view from "Average" to "Excellent", this price will go up by \\$80k-\\$813k on average.
+- `waterfront_YES`           7.651e+05
+    - Whether the house is on a waterfront will also have a major impact on it's price, and on average will cause a price increase of \\$765k.
+- `nuisance_YES`            -3.967e+04
+    - Whether the house has traffic noise or other recorded nuisances will cause the price of the house to drop by \\$40k on average. 
+- `good_condition_yes`       5.201e+04
+   - Whether the overall condition of the house it good or better, in terms of its maintenance will cause the house price to increase by \\$52k on average.
+- `sewer_system_public_yes`  2.419e+04  
+    - Whether the house uses a public sewer system in comparison to a private one will increase it's value on average by \\$24k. 
+- `zipcode` ranged from -\\$441k to -\\$5.9 million
+    - All these zipcodes were compared to zipcode 99504, and have a negative slope in comparison
+
+All the coefficients in the model were statistically significant except for one zipcode. Most of the coefficients is this model are quite logical, that they are positive vs negative. The only major standout is bedrooms, in that more bedrooms is generally viewed as having a positive impact on the houses price. The combination of this coefficient, a MAE of \\$257k, and an adjusted r&sup2; not quite close enough to 1, indicates there is still room for improvement of the model. Perhaps given other data about the neighborhood of the houses, proximity to houses of worship, details whether the house is more kid friendly, etc. could allow us to create a more accurate model.
+
+## Data Transformations
+
+Now let's move on to some minor data transformations to see if the data is more interpretable this way:
+
+### Centering
+
+Centering won't help us, as there are many non continuous variables.
+
+### Standardizing
+
+Although standardizing includes centering, it can give us useful information about the magnitude of our numeric factors and which one has the greatest affect.
+
+What comes out is that a one standard deviation increase in:  
+    - `sqft_living` will lead to a \\$384k increase in price  
+    - `sqft_patio` will lead to a \\$21k increase in price
+    
+### Model diagnostics
+
+We will analyze the model to make sure it passes all the assumptions of linear regressions.
+
+### 1. Linearity
+
+Below are partial regression plots for all model features except for zipcode(as there are too many):
+
+Most of the data is not looking very linear. Let's just do a linear rainbow test to confirm this.
+
+The p-value is well below an alpha level of .05. As such we can reject the null, and say that indeed the data is not very linear.
+
+To solve this issue let's try doing a log transformation of our data reduces the order of magnitude, making the higher values lower and lower values higher, it also should undo exponentiation.
+
+Let's log transform our target variable
+
+### Log Transformed Model Analysis
+
+Notable differences with our new model:
+
+- Our new model now explains about 68%(adjusted R-Squared 0.681) of the variance in Price while our old model was only around 65%.
+- Our model as a whole is statistically significant as well as the constant. However, a small minority of our coefficients are no longer statistically significant. These include: `bedrooms`, `sewer_system_public_yes`, and a small number of zipcodes. 
+- There is a new way to interpret slope:
+    - For ex: For each increase of 1 unit in `sqft_living`, we see an associated positive change of .03% in house price.
+    - For each increase of 1 unit in `sqft_patio`, we see an associated positive change of .006% in house price.
+- The new MAE is .2. This is interpreted as:
+    -  on average the model's predictions are off by a factor of e^(0.2) = 1.22, which corresponds to a 22% error in the target variable values.
+
+Now, let's try running a new linear rainbow test to see how linear the data is
+
+With a p-value of .96 we do not have nearly enough evidence to reject the null(that the data is linear), so we will conclude that our data is probably linear.
+
+### 2. Independence
+
+We already made sure to not use factors with high correlation with eachother. Nonetheless we will pull up the code again here. Again we will use a cutoff correlation of .7.
+
+
+Since we have only used `yr_built` and `sqft_living`. Thus we have no issues of multicollinearity.
+
+### 3. Normality
+
+To check for this lets pull up the distribution of our `iterated_results6` and then the distribution of `log_results`
+
+This histogram looks much more normal. Let's run a Q-Q plot to confirm its normality. 
+This method compares two probability distributions by plotting their quantiles against each other.
+
+We will use the Q-Q plot to compare our data to a normal distribution of data. When examining the Q-Q plot we want the data points to follow the diagonal line as closely as possible.
+
+<div>
+<img src="Images/qq_plot.jpg", width = 800, height = 300/>
+</div>
+
+As we saw in the original histogram, the original distribution of `price` has a strong skew to the right. Although the log transformed value isn't perfect it seems close to normal, as most of the values within 2 standard deviations of the mean are very close to the red line.
+
+### 4. Equal Variance: Homoscedasticity
+
+
+We are hoping that our data is Homoscedastic, meaning that the variable's variability is equal across the range of values of the predictor.
+
+<div>
+<img src="Images/equal_var_plot.jpg", width = 800, height = 400/>
+</div>
+
+Both plots are not looking very homoscedastic. However, we will run Breusch-Pagan tests on both to confirm this
+
+For both of our models we reject the null hypothesis and thus assume that both models are heteroscedastic. 
+
+### Patio Statistics
+
+Lets pull up some summary patio statistics so we can give adequate advice about patio size.
+
+We see that overall houses with patios cost more than houses without. Additionally the median patio size compared to living area is around 10% and median patio size compared to lot size is around 3%
+
+## Conclusion
+
+We will now sum up the analysis, and give our advice to the stakeholder based on our model. 
+
+After our final analysis we had 2 options for our final model. The first option was the non log transformed version and the second was log transformed. 
+
+1. Adjusted r squared:
+    - The original model explained 65%(adjusted R-Squared 0.654) of the variance in price.
+    - The log transformed model now explains about 68%(adjusted R-Squared 0.681) of the variance in price.
+2. Statistical significance of model:
+    - Both models were statistically significant as a whole.
+3. Statistical significance of constant and coefficients:
+    - The original model has the constant as well as all the coefficients being statistically significant, except for one coefficient of a `zipcode`.
+    - The log transformed model has the constant and most of the coefficients being statistically significant. However, the coefficients for `bedrooms`, `sewer_system_public_yes`, and a small number of `zipcodes` are no longer significant.
+4. Mean Absolute Error:
+    - The mean absolute error for our original model is \\$257k, which means that on average the models predictions are off by \\$257k.
+    - The mean absolute error for our log transformed model is .2 which means that on average the model's predictions are off by 22% in the target variable values.
+5. LINE (Linearity, Independence, Normality, Equal Variance) Assumptions
+    - Our original model is not linear, normal, and is heteroscedastic, meaning it lacks equal variance. However, there is not much multicollinearity issues as each factor is not very dependent on the other factors.
+    - Our log transformed model is linear, normal, has minimal multicollinearity; however, it is also heteroscedastic.
+    
+Overall, the log transformed model is slightly better; however, there is a slight trade off in the interpretability. In our original model an addition of one square foot in patio area leads to a \\$86 increase in price while an addition square foot of living space leads to a \\$395 
+increase in price. In our log transformed model the coefficients are read as an increase of one square foot of patio space is associated with a increase of .006% in house price. While an increase of one square foot of living space, will be associated with a .03% in house price.
+
+## Recommendations
+
+Unfortunately for King of the Deck it seems as though adding patio space over living space is not recommended. Although there are many other factors involved house prices of those with patios are higher than those without patios. Additionally, we saw from our model that adding patio space over nothing at all does add to the house price. Therefore we recommend that they expand their business to include home renovations, as it is more profitable. However, it is recommended to add some sort of patio to the house as it will increase price. In terms of the size of the patio, they should build patios that are around 10% the square footage of the living area and around 3% of the lot area.
+
+## Limitations
+
+As noted earlier, both our final models had an adjusted r&sup2; below .7 as well as mean absolute errors that were each respectively quite high. Both of these indicate that these are not the best models and there is definitely room for improvement
+
+
+## Next steps
+
+Being that the model could use improvement, we more need more data to better to predict house prices. 
+Given more data about:
+                                             
+1. Proximity to house of worship
+2. Proximity to parks
+3. Does the house have a pool
+4. Square footage of green area/ usable outdoor are of the house
+5. Landscaping quality
+6. Does the house have a basketball hoop or private courts
+7. Family friendly house
+8. Family friendly neighborhood
+9. Social and Economic factors at the time of sale
+
+I believe given such information we can create a much more accurate model.
 
 
