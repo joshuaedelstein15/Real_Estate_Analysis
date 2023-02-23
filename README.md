@@ -1,10 +1,3 @@
-Overview(what should be done in first 2 steps)
-Business and Data Understanding
-    Explain your stakeholder audience here
-Modeling
-Regression Results
-Conclusion
-
 # Real Estate Analysis
 
 
