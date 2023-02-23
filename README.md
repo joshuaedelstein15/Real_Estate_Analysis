@@ -31,3 +31,21 @@ import scipy.stats as stats
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 
+We begin by loading and then previewing our data
+
+#we will call our data "re" which stands for real estate
+url = 'https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-2-project-v2-5/main/data/kc_house_data.csv'
+df = pd.read_csv(url)
+re = df.copy()
+re.head()
+
+
+Our data is different numeric and categorical statistics or describers of houses. Each row in the data represents one house. Our target factor(aka y variable) in the data set is price. For all the other columns we will be looking to see it's affect on price. Many of the columns describe square footage of different areas in a house. Others describe when it was built, quality, address, and various other descriptive statistics.
+
+
+With a brief scan of some of the addresses it seems that all of the houses are in the United States. However, let's right a short code to confirm this
+
+re['address'].str[-14:].value_counts()
+
+
+
