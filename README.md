@@ -358,7 +358,7 @@ This method compares two probability distributions by plotting their quantiles a
 We will use the Q-Q plot to compare our data to a normal distribution of data. When examining the Q-Q plot we want the data points to follow the diagonal line as closely as possible.
 
 <div>
-<img src="Images/qq_plot.jpg", width = 800, height = 300/>
+<img src="Images/qq_plot.jpg", width = 800, height = 400/>
 </div>
 
 As we saw in the original histogram, the original distribution of `price` has a strong skew to the right. Although the log transformed value isn't perfect it seems close to normal, as most of the values within 2 standard deviations of the mean are very close to the red line.
