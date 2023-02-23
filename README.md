@@ -7,8 +7,13 @@ Conclusion
 
 # Real Estate Analysis
 
-## Overview
 
+## Overview
+The real estate market has seen significant fluctuations over the past two years, with many factors affecting housing prices. With such volatility, it has become increasingly important for both buyers and sellers to have accurate predictions of housing prices in order to make informed decisions.
+
+An effective way to accomplish this is through the use of predictive models that take into account various factors, such as location, square footage, number of bedrooms and bathrooms, and other categorical features that may impact housing prices. By analyzing data from past housing transactions and creating models based on these factors, it is possible to predict the likely selling price of a house with a certain degree of accuracy.
+
+Such models can be useful for a variety of purposes, from helping home buyers make informed decisions about which properties to consider, to helping real estate professionals set appropriate listing prices for their clients' homes. While no model can predict the exact price of a home with 100% accuracy, these predictive tools can provide valuable insights into the factors that influence housing prices and help both buyers and sellers navigate the complex and ever-changing real estate market.
 
 
 ## Business Understanding
@@ -157,5 +162,99 @@ Upon examining the graphs we find some useful information:
 - Looking at the y-axis, `grade` seems to be the most significant, followed by `view` and `waterfront`. 
 
 So lets start with grade, and one hot encode new dummy values
+
+Since grade_2Substandard is the worst level, we will drop it, and use it as the baseline
+
+Now, we create our first model with a categorical value
+
+Our model as a whole is statistically significant, and the adjusted r squared has increased from 40.3% to 48.7%
+
+However, all the coefficients for grade that are below 11 are not statistically significant.
+
+So let's try engineering a new feature that is only the higher level grades. We will create a new row called high_grade that will say "yes" if the grade is 11 or up, and "no" if the grade is below 11. We will then create new dummy values and run a new model with our new column instead of grade
+
+Although, this model has a slightly lower adjusted r squared then the previous model, at only 44.1%, it is still much better then our original model. Additionally, all the variables are now statistically significant.
+
+Lets pull up the value counts to see if there is a significant number of higher grade houses.
+
+We see that since there is such a small amount of high graded houses, grade only becomes a significant factor for houses with grades 11-13.
+
+Let's add in view now, to see how it affects our model
+
+Now that is a significantly better adjusted r-squared at 46.8% and all of our values our significant.
+
+However, lets check out the value counts to see if there is a significant amount of data.
+
+Since roughly 90% of the data has no view this factor only becomes significant when a house has a view.
+
+Instead of going through each categories value counts one by one, lets just pull them up now, to see which one has a fair distribution of values
+
+Let's break the sewer_system column down into 2 values, that say whether it's public or private. Additionally let's break down the condition column into 2 values, whether it is atleast in "good" condition.
+
+Now we will create and run our new model this will include: `sqft_living`, `sqft_patio`, `bedrooms`, `yr_built`, `yr_renovated`, `high_grade`, `view`, `waterfront`, `nuisance`, `good_condition`, `sewer_system_public`
+
+
+Now we have our highest adjusted r² is it's highest yet at 48.1% and all the p values for coefficients are significant
+
+Using some basic googling and common knowledge it seems like one of the main factors in price is location. As such let's create a new column that isolates the zipcode. We will do use by using the str method on the address column.
+
+We'll re run the same model just now including our new column `zipcode`
+
+## Final Model results
+
+Although we may do some slight tinkering with the model after this(ex: scaling, centering, or other minor changes) this will be our final model.
+
+### Data Understanding and Preparation
+
+Our final model included these factors:
+
+   - `sqft_living` 
+   - `sqft_patio` 
+   - `bedrooms`
+   - `yr_built` 
+   - `yr_renovated`
+   - `high_grade`
+   - `view` 
+   - `waterfront` 
+   - `nuisance`
+   - `good_condition`
+   - `sewer_system_public`
+   - `zipcode`
+    
+We performed data cleaning on the data frame as a whole and removed a small amount of columns with missing values. We also created new factors based on the given ones, by categorizes houses with grades 11 and up with a high grade. We also grouped the condition column into 2 groups, based on whether it had atleast a good condition. We also group the sewer system into, 2 groups whether it was public or private. Then we one-hot encoded `high_grade`, `view`, `waterfront`, `nuisance`, `good_condition`, `sewer_system_public`, `zipcode`, resulting in 9 dummy predictors, not including the dummy predictors for each zipcode.
+
+We will now pull up scatterplots and bar charts of our factors:
+
+<div>
+<img src="Images/num_graph.jpg", width = 800, height = 300/>
+</div>
+
+<div>
+<img src="Images/cat_graph.jpg", width = 800, height = 300/>
+</div>
+
+
+### Model Metrics
+
+These features were fed into an ordinary least-squares multiple regression model. This model:
+
+- is statistically significant overall (F-statistic p-value 0.00)
+- explains about 65% of the variance in Price (adjusted R-Squared 0.654)
+- is off by about \\$257K in an average prediction (MAE 256787.05)
+
+### Model Interpretation
+
+Below are all model coefficients and p-values(again excluding zipcode as there are far too many):
+
+<div>
+<img src="Images/factor_stats.jpg", width = 200, height = 200/>
+</div>
+
+And here are summary statistics of the zipcode coefficients:
+
+<div>
+<img src="Images/zipcode_stats.jpg", width = 200, height = 200/>
+</div>
+
 
 
