@@ -148,7 +148,7 @@ It is probably fair to assume that address doesn't have much of an affect on the
 Let's begin by pulling up histograms of all the categorical factors to see which ones seem to have a strong variance in price based on each value. When loading the histograms, I got a 'SettingWithCopyWarning', as a quick fix I googled an import code to remove this warning. To see more about the issue <a href="https://www.dataquest.io/blog/settingwithcopywarning/">click here</a>
 
 <div>
-<img src="Images/categorical_data.jpg", width = 200, height = 200/>
+<img src="Images/categorical_data.jpg", width = 800, height = 300/>
 </div>
 
 Upon examining the graphs we find some useful information:
