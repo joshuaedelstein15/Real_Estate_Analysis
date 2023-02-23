@@ -69,5 +69,10 @@ Now lets create a heatmap to see if we can get a better view
 <img src="Images/heatmap.jpg", width = 400, height = 300/>
 </div>
 
+There is still too much going on in both of those, so let's pull up the correlations within the price column alone.
+
+<div>
+<img src="Images/correlations.jpg", width = 400, height = 300/>
+</div>
 
 
