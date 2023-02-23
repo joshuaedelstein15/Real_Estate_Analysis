@@ -7,6 +7,10 @@ Conclusion
 
 # Real Estate Analysis
 
+## Overview
+
+
+
 ## Business Understanding
 
 King of the Deck, a deck design company, has requested that we conduct research for them. They are considering expanding their business to indoor renovations as well. They want to know given a certain amount of space to renovate if it's a better investment to create an outdoor deck or indoor living space. We are tasked with creating a model that predicts house prices, and within that model seeing the affect of each extra square foot of deck space vs living space on overall house price.
@@ -74,5 +78,84 @@ There is still too much going on in both of those, so let's pull up the correlat
 <div>
 <img src="Images/correlations.jpg", width = 200, height = 200/>
 </div>
+
+Unsurprisingly price is 100% correlated with itself. The variable with the strongest correlation with price is sqft_living with a value of .61. This column describes the total square footage of living space in the home. It is quite logical that this is the highest correlated factor, as in general the bigger the house is, the more it will sell for.
+
+
+### Single Variable Regression Model
+
+Lets create a basic regression model with the highest correlated value. We should keep in mind that this could also be a negative number(although in this case it clearly isn't). With a correlation value of .61 we shouldn't expect such a great model, as although this doesn't illustrate some significance, it is nowhere near perfect
+
+First we will pull up a scatter plot showing the relationship between `sqft_living` and `price`. In plotting this scatterplot, I encountered an error message; with some interet research I found an import statement that can be used as a workaround. To see more about the issue <a href="https://stackoverflow.com/questions/55109716/c-argument-looks-like-a-single-numeric-rgb-or-rgba-sequence">click here</a>
+
+
+There seems to be some sort of upward trend with a few outlier values, both on the x and y axes.
+
+Now, let's move on to create the actual model. We will first set price as our target value, and then sqft_living as our X value for our first model. Then we will use methods from statsmodels to create the model. Finally we will pull up the summary stats. 
+
+Now we will calculate the baseline mean absolute error, and then we will give an analysis of our model.
+
+`sqft_living` was the attribute most strongly correlated with price, therefore our model is describing this relationship.
+
+Overall this model is statistically significant and explains about 37% of the variance in price. Although there is some significance to this number, there definitely is room to improve.
+In a typical prediction, the model is off by around $396k. 
+
+- The intercept is at about -\\$76k. This means that a house with 0 square feet of living area  would sell for -\$76k. It is fine that this value doesn't make sense as there is no such thing as a house that is 0 square feet. 
+- The coefficient for sqft_living is about \\$560. This means for each additional square foot of living area, the house price increase by $560.
+
+
+### Adding Other Factors
+In hopes of creating a better model we will add in other numerical factors. However, we want to make to sure to avoid multicollinearity, meaning that one factor shouldn't be a good predictor of a different factor. To avoid this we will pull up the correlation between all numerical factors with eachother. The ones with correlation above .7 we won't use. 
+
+The code for this was taken from the from the curriculum on <a href="https://github.com/learn-co-curriculum/dsc-multicollinearity-of-features">this</a>  github page.
+
+
+It seems that we should either use long or lat if we plan on using any of them, and probably better to only use one of: sqft_above, sqft_living, bathrooms, as there is high multicollinearity between these values. Since sqft_living is the highest correlated with price we will stick with that.
+
+So let's reload the correlation values, and create a new model with the values that aren't highly correlated with eachother.
+
+Our new X value is all of the numerical factors, except for sqft_above, bathrooms, sqft_lot, long, lat, and id. In other words we are using: `sqft_living`, `sqft_patio`, `bedrooms`, `sqft_garage`, `sqft_basement`,`floors`, `yr_built`, `yr_renovated`. 
+
+Our new model is describing the relationship between most of the numerical factors and price.
+
+Overall the model is still statistically significant and is slightly better than the last as it explains 40.3% of the variance in price. This number still isn't great, and could use some improvement. 
+
+All of the individual parts of the model are still statistically significant.
+
+- The model is off by slightly less then the last one, as the MAE is now \\$381K. 
+- The constant has had a drastic change and is now roughly \\$5.6 million. Again, it is fine that this number doesn't make sense, as there is no such thing as a house with 0 sqft.
+- The coefficient:
+    - `sqft_living`:     644.1443.
+    - `sqft_patio`:      264.3368   
+    - `bedrooms`:      -1.477e+05   
+    - `sqft_garage`:     -52.7882   
+    - `sqft_basement`:    28.4341    
+    - `floors`:         7.007e+04   
+    - `yr_built`:      -2780.7161    
+    - `yr_renovated`:     66.2543
+    
+The values for all the factors except for `bedrooms`, `sqft_garage`, and `yr_built` are all quite reasonable, in that they are positive. Meaning, that usually when you have more square feet in a certain area, more floors, or a newly renovated house the price goes up. However, in general adding extra bedrooms, a larger garage, or a newer house causes the price to go up although this model seems to indicate the opposite. This is a clear sign that the model can use some improvement.
+
+Let's create a row that gives us the age of the house when it was sold to see if this is a better predictor then `yr_built`
+
+
+When we tweak our model to compate `age` and `yr_built` we see that the adjusted r-squared values are the same. As such we will stick with our original model which includes `yr_built`
+
+If we play around with the data a bit, we can create a column that gives the amount of floors per lot size that may have a slightly positive impact on our model, that we can use later on
+
+It is probably fair to assume that address doesn't have much of an affect on the price, and we already used date so lets check out other variables.
+
+Let's begin by pulling up histograms of all the categorical factors to see which ones seem to have a strong variance in price based on each value. When loading the histograms, I got a 'SettingWithCopyWarning', as a quick fix I googled an import code to remove this warning. To see more about the issue <a href="https://www.dataquest.io/blog/settingwithcopywarning/">click here</a>
+
+<div>
+<img src="Images/categorical_data.jpg", width = 200, height = 200/>
+</div>
+
+Upon examining the graphs we find some useful information:
+
+- Everything seems to have atleast a slight variance across each of it's individual values.
+- Looking at the y-axis, `grade` seems to be the most significant, followed by `view` and `waterfront`. 
+
+So lets start with grade, and one hot encode new dummy values
 
 
