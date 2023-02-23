@@ -33,19 +33,41 @@ from sklearn.preprocessing import StandardScaler
 
 We begin by loading and then previewing our data
 
-#we will call our data "re" which stands for real estate
-url = 'https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-2-project-v2-5/main/data/kc_house_data.csv'
-df = pd.read_csv(url)
-re = df.copy()
-re.head()
-
 
 Our data is different numeric and categorical statistics or describers of houses. Each row in the data represents one house. Our target factor(aka y variable) in the data set is price. For all the other columns we will be looking to see it's affect on price. Many of the columns describe square footage of different areas in a house. Others describe when it was built, quality, address, and various other descriptive statistics.
 
 
 With a brief scan of some of the addresses it seems that all of the houses are in the United States. However, let's right a short code to confirm this
 
-re['address'].str[-14:].value_counts()
+As we assumed, all the data is indeed from the USA
+
+Now lets take a further look into the statistics within each numerical row
+
+First thing to note is that we have a pretty large sample size, over 30k houses.
+
+If we look at the min and max in the yr_built column we see that the data frame is of houses built between 1900-2022.
+
+Let's see when the houses were sold
+
+We see that all the houses were sold in 2021 and 2022
+
+## Data Preparation
+
+Let's pull up the info of the data, and to see if there are any missing values
+
+We see that there are 2 columns with missing values let's just drop the rows with missing values, as is it not even .01% of the data
+
+## Data Analysis and Modeling
+
+We will begin our data analysis by finding the variable that has the highest correlation with out target variable, `price`. We will attempt to create the best possible model at predicting the price. Once we have that we will determine the affect each extra square foot of patio has on the price of the house.
+
+First, let's pull up a correlation matrix of all the data.
+
+Now lets create a heatmap to see if we can get a better view
+
+<div>
+<img src="Images/heatmap.jpg", width = 500, height = 250/>
+</div>
 
 
 
