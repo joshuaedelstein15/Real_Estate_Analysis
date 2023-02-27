@@ -210,7 +210,7 @@ We performed data cleaning on the data frame as a whole and removed a small amou
 We will now pull up scatterplots and bar charts of our factors:
 
 <div>
-<img src="Images/num_graph.jpg", width = 600, height = 300/>
+<img src="Images/num_graph.jpg", width = 700, height = 250/>
 </div>
 
 <div>
