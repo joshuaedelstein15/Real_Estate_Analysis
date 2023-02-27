@@ -23,15 +23,6 @@ Photo by <a href="https://unsplash.com/photos/f9qZuKoZYoY">Avi Waxman</a> on <a 
  
 Most of our data was pulled from <a href="https://info.kingcounty.gov/assessor/DataDownload/default.aspx">King County Assessor Data Download</a> 
 
-import pandas as pd 
-import seaborn as sns
-import matplotlib.pyplot as plt
-%matplotlib inline
-import statsmodels.api as sm
-import numpy as np
-import scipy.stats as stats
-from sklearn.metrics import mean_absolute_error
-from sklearn.preprocessing import StandardScaler
 
 We begin by loading and then previewing our data
 
