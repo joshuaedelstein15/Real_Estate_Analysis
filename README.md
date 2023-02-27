@@ -392,7 +392,8 @@ increase in price. In our log transformed model the coefficients are read as an 
 
 ## Recommendations
 
-Unfortunately for King of the Deck it seems as though adding patio space over living space is not recommended. Although there are many other factors involved house prices of those with patios are higher than those without patios. Additionally, we saw from our model that adding patio space over nothing at all does add to the house price. Therefore we recommend that they expand their business to include home renovations, as it is more profitable. However, it is recommended to add some sort of patio to the house as it will increase price. In terms of the size of the patio, they should build patios that are around 10% the square footage of the living area and around 3% of the lot area.
+Unfortunately for King of the Deck it seems as though adding patio space over living space is not the best investment. So it may pay for them to expand into this field. However, they shouldn't be disheartened as we saw from our model that adding patio space over nothing at all does add to the house price. Additionally, although there are many other factors involved, house prices of those with patios are higher than those without patios. Therefore if they don't want to expand their business they can stick with decks alone as homeowners looking for an aesthetically pleasing deck with much less headache and cost then a full home remodeling will continue to use them. 
+In terms of the size of the patio, they should build patios that are around 10% the square footage of the living area and around 3% of the lot area.
 
 ## Limitations
 
