@@ -151,9 +151,14 @@ As we saw in the original histogram, the original distribution of `price` has a 
 
 ### Patio Statistics
 
-Lets pull up some summary patio statistics so we can give adequate advice about patio size.
 
-We see that overall houses with patios cost more than houses without. Additionally the median patio size compared to living area is around 10% and median patio size compared to lot size is around 3%
+If we do some investigation into patio statistics we see that houses with patios cost more than houses without. 
+
+<div>
+<img src="Images/patio_graph.jpg", width = 400, height = 400/>
+</div>
+
+Additionally, the median patio size compared to living area is around 10% and median patio size compared to lot size is around 3%
 
 
 
