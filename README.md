@@ -199,11 +199,11 @@ For additional info, contact Joshua Edelstein at joshuaedelstein15@gmail.com
 
 This repository contains the following files and directories:
 
-Images/: This directory contains images used in the readme and presentation.
-.gitignore/: This directory includes things we dont want to push, as well as our data.
-README/: This directory gives a brief overview of the project.
-notebook/: This directory contains a Jupyter notebook used for data exploration, modeling, and analysis.
-presentation/: This directory includes the pdf of our presentation
+Images/: This directory contains images used in the readme and presentation.  
+.gitignore/: This directory includes things we dont want to push, as well as our data.  
+README/: This directory gives a brief overview of the project.  
+notebook/: This directory contains a Jupyter notebook used for data exploration, modeling, and analysis.  
+presentation/: This directory includes the pdf of our presentation.  
 
 
 
