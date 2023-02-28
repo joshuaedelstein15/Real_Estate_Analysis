@@ -155,7 +155,7 @@ As we saw in the original histogram, the original distribution of `price` has a 
 If we do some investigation into patio statistics we see that houses with patios cost more than houses without. 
 
 <div>
-<img src="Images/patio_graph.jpg", width = 400, height = 400/>
+<img src="Images/patio_graph.jpg", width = 400, height = 300/>
 </div>
 
 Additionally, the median patio size compared to living area is around 10% and median patio size compared to lot size is around 3%
@@ -188,5 +188,24 @@ Given more data about:
 9. Social and Economic factors at the time of sale
 
 I believe given such information we can create a much more accurate model.
+
+## For More Information 
+
+See the full analysis in the href="https://github.com/joshuaedelstein15/Real_Estate_Analysis/blob/main/notebook.ipynb">Jupyter Notebook</a> or review this href="https://github.com/joshuaedelstein15/Real_Estate_Analysis/blob/main/presentation.pdf">presentation</a>.
+
+For additional info, contact Joshua Edelstein at joshuaedelstein15@gmail.com
+
+## Repository Structure
+
+This repository contains the following files and directories:
+
+Images/: This directory contains images used in the readme and presentation.
+.gitignore/: This directory includes things we dont want to push, as well as our data.
+README/: This directory gives a brief overview of the project.
+notebook/: This directory contains a Jupyter notebook used for data exploration, modeling, and analysis.
+presentation/: This directory includes the pdf of our presentation
+
+
+
 
 
