@@ -191,7 +191,7 @@ I believe given such information we can create a much more accurate model.
 
 ## For More Information 
 
-See the full analysis in the href="https://github.com/joshuaedelstein15/Real_Estate_Analysis/blob/main/notebook.ipynb">Jupyter Notebook</a> or review this href="https://github.com/joshuaedelstein15/Real_Estate_Analysis/blob/main/presentation.pdf">presentation</a>.
+See the full analysis in the <a href="https://github.com/joshuaedelstein15/Real_Estate_Analysis/blob/main/notebook.ipynb">Jupyter Notebook</a> or review this <a href="https://github.com/joshuaedelstein15/Real_Estate_Analysis/blob/main/presentation.pdf">presentation</a>.
 
 For additional info, contact Joshua Edelstein at joshuaedelstein15@gmail.com
 
