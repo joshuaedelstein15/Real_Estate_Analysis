@@ -28,8 +28,21 @@ Most of our data was pulled from <a href="https://info.kingcounty.gov/assessor/D
 Our data is different numeric and categorical statistics or describers of houses. Each row in the data represents one house. Our target factor(aka y variable) in the data set is price. All the other columns will be the independent variable, as such we will look to see how it affects on price. Many of the columns describe square footage of different areas in a house. Others describe when it was built, quality, address, and various other descriptive statistics.
 
 
-The data consists of houses built between 1900- 2022, in the USA. These houses were sold between 2021 and 2022. 
+The data consists of houses built between 1900-2022, in the USA. These houses were sold between 2021 and 2022. 
 
+Here is our data plotted across the USA. The points should be darker if they are higher priced, although it seems that the vast majority of house are below \$600k
+
+<div>
+<img src="Images/usa_scatter.jpg", width = 250, height = 200/>
+</div>
+
+Additionally we pulled a histogram showing the price distribution.
+
+<div>
+<img src="Images/price_hist.jpg", width = 350, height = 200/>
+</div>
+
+The data shows a clear skew to the right, which makes sense, as the higher the price gets the fewer houses there are.
 
 ## Data Preparation
 
@@ -106,12 +119,16 @@ The constant:
 - For a house  with 0 `sqft_living` and `sqft_patio` area, as well as 0 `bedrooms`. Thats `yr_built` and `yr_renovated` are 0(meaning it was built in 1900 and never renovated. With a house `grade` below 11, no `view`, not on a `waterfront`, with no traffic or other `nuisance`, in below good `condition`, that uses a private `sewer_system`, will have a value just around \$3 million.
     - Again, it is fine that this number doesn't make sense, as there is no such thing as a house with 0 sqft, etc.
 
-Although there are many coefficients we will only describe those most relevant to our stakeholder
+Although there are many coefficients we will only describe those most relevant to our stakeholder. We will also plot these factors alone against price
 The coefficients:
 - `sqft_living`              394.8094
     - For an increase in 1 square foot of living area, price increases by \$395.
 - `sqft_patio`                 85.6320
     - For an increase in 1 square foot of patio area, price increases by \$86.
+
+<div>
+<img src="Images/both_scatter.jpg", width = 400, height = 200/>
+</div>
 
 All the coefficients in the model were statistically significant except for one zipcode. Most of the coefficients in this model are quite logical, that they are positive vs negative. The only major standout is bedrooms, in that more bedrooms is generally viewed as having a positive impact on the houses price. The combination of this coefficient, a MAE of \$257k, and an adjusted r&sup2; not quite close enough to 1, indicates there is still room for improvement of the model. Perhaps given other data about the neighborhood of the houses, proximity to houses of worship, details whether the house is more kid friendly, etc. could allow us to create a more accurate model.
 
