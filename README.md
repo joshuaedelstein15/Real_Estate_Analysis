@@ -33,13 +33,13 @@ The data consists of houses built between 1900-2022, in the USA. These houses we
 Here is our data plotted across the USA. The points should be darker if they are higher priced, although it seems that the vast majority of house are below \$600k
 
 <div>
-<img src="Images/usa_scatter.jpg", width = 250, height = 200/>
+<img src="Images/usa_scatter.jpg", width = 400, height = 300/>
 </div>
 
 Additionally we pulled a histogram showing the price distribution.
 
 <div>
-<img src="Images/price_hist.jpg", width = 350, height = 200/>
+<img src="Images/price_hist.jpg", width = 450, height = 325/>
 </div>
 
 The data shows a clear skew to the right, which makes sense, as the higher the price gets the fewer houses there are.
