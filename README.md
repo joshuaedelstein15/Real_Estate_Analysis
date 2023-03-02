@@ -127,7 +127,7 @@ The coefficients:
     - For an increase in 1 square foot of patio area, price increases by \$86.
 
 <div>
-<img src="Images/both_scatter.jpg", width = 400, height = 200/>
+<img src="Images/both_scatter.jpg", width = 800, height = 400/>
 </div>
 
 All the coefficients in the model were statistically significant except for one zipcode. Most of the coefficients in this model are quite logical, that they are positive vs negative. The only major standout is bedrooms, in that more bedrooms is generally viewed as having a positive impact on the houses price. The combination of this coefficient, a MAE of \$257k, and an adjusted r&sup2; not quite close enough to 1, indicates there is still room for improvement of the model. Perhaps given other data about the neighborhood of the houses, proximity to houses of worship, details whether the house is more kid friendly, etc. could allow us to create a more accurate model.
