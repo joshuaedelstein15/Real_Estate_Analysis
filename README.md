@@ -46,9 +46,7 @@ The data shows a clear skew to the right, which makes sense, as the higher the p
 
 ## Data Preparation
 
-Let's pull up the info of the data, and to see if there are any missing values
-
-There were 2 columns with missing values we dropped the rows with missing values they were not even .01% of the data
+We pulled up the info of the data to see if there are any missing values and found that 2 of the columns had rows with missing values. Since these rows constitued less than .01% of the data we dropped them.
 
 ## Data Analysis and Modeling
 
